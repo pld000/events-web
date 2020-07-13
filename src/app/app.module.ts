@@ -6,11 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventFormComponent } from './components/event-form/event-form.component';
+import { WarningModalComponent } from './components/warning-modal/warning-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EventFormComponent
+    EventFormComponent,
+    WarningModalComponent
   ],
   imports: [
     BrowserModule,

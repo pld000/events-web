@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h4 class="modal-title">Заполните следующие поля</h4>
+  <button class="close"
+          (click)="modal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <ul>
+    <li *ngFor="let err of errors">{{err}}</li>
+  </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light"
+          (click)="modal.close()">Закрыть
+  </button>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IEvent } from '../../interfaces/i-event.interface';
+import { EVENT_FORM_CONTROLS_NAME } from '../../constants/common.constants';
 
 @Component({
   selector: 'event-form',
@@ -12,6 +13,7 @@ export class EventFormComponent implements OnInit {
   @Output() onError = new EventEmitter<any>();
 
   public eventForm: FormGroup;
+  public isSubmitted = false;
 
   constructor(private _fb: FormBuilder) {
   }
@@ -25,9 +27,12 @@ export class EventFormComponent implements OnInit {
       content: ['', Validators.required],
       // attachment: ['', Validators.required],
     });
+
+    console.log(this.eventForm, 'soem huina')
   }
 
   public submit() {
+    this.isSubmitted = true;
     if (this.eventForm.valid) {
       this.onSubmit.next(this.eventForm.value);
     } else {
@@ -35,7 +40,21 @@ export class EventFormComponent implements OnInit {
     }
   }
 
-  private _getFormErrors(form: FormGroup) {
+  public clear() {
+    this.eventForm.reset();
+    this.isSubmitted = false;
+  }
 
+  private _getFormErrors(form: FormGroup) {
+    const formErrors = [];
+
+    Object.keys(this.eventForm.controls).forEach((controlKey) => {
+      const control = this.eventForm.controls[controlKey];
+
+      if (control.errors && control.errors.required) {
+        formErrors.push(EVENT_FORM_CONTROLS_NAME[controlKey]);
+      }
+    });
+    return formErrors;
   }
 }
