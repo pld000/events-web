@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventFormComponent } from './components/event-form/event-form.component';
 import { WarningModalComponent } from './components/warning-modal/warning-modal.component';
+import { EventsApiService } from "./services/events-api.service";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { WarningModalComponent } from './components/warning-modal/warning-modal.
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    EventsApiService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

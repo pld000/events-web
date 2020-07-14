@@ -1,10 +1,10 @@
 export interface IEvent {
   fio: string;
   department: string;
-  eventsList: string;
+  eventsList?: string;
   theme: string;
   content: string;
-  attachment: string;
+  file: string;
   date: string;
   time: string;
 }

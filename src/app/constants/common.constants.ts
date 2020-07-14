@@ -3,5 +3,5 @@ export const EVENT_FORM_CONTROLS_NAME = {
   department: 'Подразделение',
   theme: 'Тема',
   content: 'Содержание',
-  attachment: 'Файл',
+  file: 'Файл',
 };

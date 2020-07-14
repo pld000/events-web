@@ -25,16 +25,18 @@ export class EventFormComponent implements OnInit {
       // eventsList: [, Validators.required],
       theme: ['', Validators.required],
       content: ['', Validators.required],
-      // attachment: ['', Validators.required],
+      file: ['', Validators.required],
     });
-
-    console.log(this.eventForm, 'soem huina')
   }
 
   public submit() {
     this.isSubmitted = true;
     if (this.eventForm.valid) {
-      this.onSubmit.next(this.eventForm.value);
+      const now = new Date();
+      this.onSubmit.next(Object.assign({}, this.eventForm.value, {
+        date: `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`,
+        time: `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`,
+      }));
     } else {
       this.onError.next(this._getFormErrors(this.eventForm));
     }
