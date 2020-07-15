@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { EventFormComponent } from './components/event-form/event-form.component';
 import { WarningModalComponent } from './components/warning-modal/warning-modal.component';
 import { EventsApiService } from "./services/events-api.service";
+import { SearchEventsComponent } from './components/search-events/search-events.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EventFormComponent,
-    WarningModalComponent
+    WarningModalComponent,
+    SearchEventsComponent
   ],
   imports: [
     BrowserModule,
