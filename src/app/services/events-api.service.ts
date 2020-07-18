@@ -12,12 +12,13 @@ export class EventsApiService {
     this._apiBase = environment.apiBase;
   }
 
+  public searchEvents(q: string) {
+    const url = this._apiBase + 'events';
+    return this._http.get(url, { params: { q } });
+  }
+
   public createEvent(event: IEvent) {
     const url = this._apiBase + 'events';
-    return this._http.post(url, event)
-      .toPromise()
-      .then((response) => {
-        console.log(response);
-      });
+    return this._http.post(url, event);
   }
 }

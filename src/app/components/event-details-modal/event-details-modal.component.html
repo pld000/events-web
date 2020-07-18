@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h4 class="modal-title">Детали события</h4>
+  <button class="close"
+          (click)="modal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <event-form
+    [detailsView]="true"
+    [event]="event"
+  ></event-form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light"
+          (click)="modal.close()">Закрыть
+  </button>
+</div>

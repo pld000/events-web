@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IEvent } from '../../interfaces/i-event.interface';
 import { EVENT_FORM_CONTROLS_NAME } from '../../constants/common.constants';
@@ -8,7 +8,9 @@ import { EVENT_FORM_CONTROLS_NAME } from '../../constants/common.constants';
   templateUrl: './event-form.component.html',
   styleUrls: ['./event-form.component.scss']
 })
-export class EventFormComponent implements OnInit {
+export class EventFormComponent implements OnInit, OnChanges {
+  @Input() event: IEvent;
+  @Input() detailsView = false;
   @Output() onSubmit = new EventEmitter<IEvent>();
   @Output() onError = new EventEmitter<any>();
 
@@ -22,11 +24,21 @@ export class EventFormComponent implements OnInit {
     this.eventForm = this._fb.group({
       fio: ['', Validators.required],
       department: ['', Validators.required],
-      // eventsList: [, Validators.required],
       theme: ['', Validators.required],
       content: ['', Validators.required],
       file: ['', Validators.required],
     });
+
+    const { id, date, time, ...rest } = this.event;
+    this.eventForm.setValue(rest);
+
+    if (this.detailsView) {
+      this.eventForm.disable();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.isSubmitted = false;
   }
 
   public submit() {

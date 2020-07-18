@@ -1,10 +1,11 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-7 col-lg-6 col-xl-5">
-      <div class="card p-4 shadow-block">
+      <div class="card p-4 shadow-block mb-4">
         <h4 class="text-center mb-3">Поиск</h4>
 
         <search-events
+          (onEventFound)="showEventDetails($event)"
         ></search-events>
       </div>
 
@@ -12,10 +13,19 @@
         <h4 class="text-center mb-3">Регистрация события</h4>
 
         <event-form
+          [event]="event"
           (onSubmit)="createEvent($event)"
           (onError)="showWarning($event)"
         ></event-form>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="alert-wrap"
+     [class.show]="isAlertVisible"
+     (click)="isAlertVisible = false">
+  <div class="alert alert-success">
+    Событие зарегестрированно.
   </div>
 </div>
