@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IEvent } from "../interfaces/i-event.interface";
 import { environment } from '../../environments/environment';
 import { Observable } from "rxjs";
@@ -17,8 +17,9 @@ export class EventsApiService {
     return this._http.get(url, { params: { q } });
   }
 
-  public createEvent(event: IEvent) {
+  public createEvent(formData: FormData) {
     const url = this._apiBase + 'events';
-    return this._http.post(url, event);
+    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' });
+    return this._http.post(url, formData, { headers });
   }
 }

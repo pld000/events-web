@@ -33,8 +33,8 @@ export class AppComponent implements OnInit {
     modalRef.componentInstance.errors = errors;
   }
 
-  public createEvent(event: IEvent) {
-    return this._eventsApi.createEvent(event)
+  public createEvent(formData: FormData) {
+    return this._eventsApi.createEvent(formData)
       .toPromise()
       .then(() => this.event = this._getEmptyEvent())
       .then(() => this._showAlert());
