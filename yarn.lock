@@ -5685,6 +5685,11 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+ng-busy@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/ng-busy/-/ng-busy-9.0.0.tgz#96dfa227bc74a40ed5bebdb0ee0ea037e121fa6b"
+  integrity sha512-UZvk4ho8QX/2MV/mfktmOCpa8CRfame6n/X0HdMBSe7b/pKSTHCCZ0tFAQh895kMcto2x5JTVp6NacNOwq4odQ==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

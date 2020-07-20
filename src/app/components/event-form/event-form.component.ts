@@ -20,7 +20,8 @@ export class EventFormComponent implements OnInit, OnChanges {
 
   public eventForm: FormGroup;
   public isSubmitted = false;
-  public fileSource: any;
+  public fileUrl = '';
+  public busy: Promise<any>;
 
   constructor(private _fb: FormBuilder,
               private _fileUpload: FileUploadService) {
@@ -37,6 +38,7 @@ export class EventFormComponent implements OnInit, OnChanges {
 
     const { id, date, time, ...rest } = this.event;
     this.eventForm.setValue(rest);
+    this.fileUrl = this.event.file;
 
     if (this.detailsView) {
       this.eventForm.disable();
@@ -45,18 +47,27 @@ export class EventFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.isSubmitted = false;
+
+    if (this.eventForm) {
+      const { id, date, time, ...rest } = this.event;
+      this.eventForm.setValue(rest);
+      this.fileUrl = this.event.file;
+    }
   }
 
   public onFileChange(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
 
-      this._fileUpload.getSignedRequest(file)
+      this.busy = this._fileUpload.getSignedRequest(file)
         .pipe(switchMap((res: ISignedRequest) => {
           return this._fileUpload.uploadFile(file, res.signedRequest, res.url)
         }))
         .toPromise()
-        .then((url) => this.eventForm.patchValue({ file: url }));
+        .then((url) => {
+          this.fileUrl = url;
+          this.eventForm.patchValue({ file: url });
+        });
     }
   }
 
@@ -71,19 +82,10 @@ export class EventFormComponent implements OnInit, OnChanges {
       })
 
       for (const formField in eventData) {
-        if (formField === 'file') {
-          formData.append('file', this.fileSource);
-        } else {
-          formData.append(formField, eventData[formField]);
-        }
+        formData.append(formField, eventData[formField]);
       }
 
       this.onSubmit.next(formData);
-      // const now = new Date();
-      // this.onSubmit.next(Object.assign({}, this.eventForm.value, {
-      //   date: `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`,
-      //   time: `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`,
-      // }));
     } else {
       this.onError.next(this._getFormErrors(this.eventForm));
     }
@@ -92,6 +94,7 @@ export class EventFormComponent implements OnInit, OnChanges {
   public clear() {
     this.eventForm.reset();
     this.isSubmitted = false;
+    this.fileUrl = '';
   }
 
   private _getFormErrors(form: FormGroup) {
