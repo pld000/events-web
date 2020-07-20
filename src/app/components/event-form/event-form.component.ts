@@ -1,7 +1,11 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { switchMap } from 'rxjs/operators';
+
 import { IEvent } from '../../interfaces/i-event.interface';
+import { ISignedRequest } from '../../interfaces/i-signed-request.interface';
 import { EVENT_FORM_CONTROLS_NAME } from '../../constants/common.constants';
+import { FileUploadService } from "../../services/file-upload.service";
 
 @Component({
   selector: 'event-form',
@@ -18,7 +22,8 @@ export class EventFormComponent implements OnInit, OnChanges {
   public isSubmitted = false;
   public fileSource: any;
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder,
+              private _fileUpload: FileUploadService) {
   }
 
   ngOnInit(): void {
@@ -44,7 +49,14 @@ export class EventFormComponent implements OnInit, OnChanges {
 
   public onFileChange(event) {
     if (event.target.files.length > 0) {
-      this.fileSource = event.target.files[0];
+      const file = event.target.files[0];
+
+      this._fileUpload.getSignedRequest(file)
+        .pipe(switchMap((res: ISignedRequest) => {
+          return this._fileUpload.uploadFile(file, res.signedRequest, res.url)
+        }))
+        .toPromise()
+        .then((url) => this.eventForm.patchValue({ file: url }));
     }
   }
 

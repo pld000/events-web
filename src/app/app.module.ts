@@ -11,6 +11,7 @@ import { WarningModalComponent } from './components/warning-modal/warning-modal.
 import { EventsApiService } from "./services/events-api.service";
 import { SearchEventsComponent } from './components/search-events/search-events.component';
 import { EventDetailsModalComponent } from './components/event-details-modal/event-details-modal.component';
+import { FileUploadService } from "./services/file-upload.service";
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { EventDetailsModalComponent } from './components/event-details-modal/eve
     EventDetailsModalComponent,
   ],
   providers: [
-    EventsApiService
+    EventsApiService,
+    FileUploadService
   ],
   bootstrap: [AppComponent]
 })
